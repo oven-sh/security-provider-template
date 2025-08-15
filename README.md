@@ -48,12 +48,24 @@ const ThreatFeedItemSchema = z.object({
 
 ## Testing
 
-This template comes with a test file already setup. It tests for known malicious
-packages that exist on npm
+This template comes with a test file already setup. It tests for a known
+malicious package version. You can remove or edit this test file as you see fit.
 
 ```bash
 bun test
 ```
+
+## Publishing Your Provider
+
+Publishing your security provider is straightforward - simply publish it to npm:
+
+```bash
+bun publish
+```
+
+That's it! Once published, users can configure Bun to use your security provider
+by installing it in the project and adding it to their `bunfig.toml`
+configuration file.
 
 ## Contributing
 
@@ -62,6 +74,6 @@ security requirements.
 
 ## Support
 
-For Bun-specific questions, see the [Bun documentation](https://bun.com/docs).
+For docs and questions, see the [Bun documentation](https://bun.com/docs) or [Join our Discord](https://bun.com/discord).
 
 For template issues, please open an issue in this repository.
