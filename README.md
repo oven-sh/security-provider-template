@@ -1,3 +1,5 @@
+<img src="https://bun.com/logo.png" height="36" />
+
 # Bun Security Provider Template
 
 A template for creating custom security providers for Bun's package installation
