@@ -19,9 +19,11 @@ export const provider: Bun.Security.Provider = {
 
 		// Iterate over reported threats and return an array of advisories. This
 		// could longer, shorter or equal length to the input packages. Whatever
-		// you return will be shown to the user.
+		// you return will be shown to the user.#
 
-		return json.flatMap(item => {
+		const results: Bun.Security.Advisory[] = [];
+
+		for (const item of json) {
 			// Advisory levels control installation behavior:
 			// - All advisories are always shown to the user regardless of level
 			// - Fatal: Installation stops immediately (e.g., backdoors, botnets)
@@ -32,22 +34,20 @@ export const provider: Bun.Security.Provider = {
 			const isWarning =
 				item.categories.includes('protestware') || item.categories.includes('adware');
 
-			if (!isFatal && !isWarning) {
-				return [];
-			}
+			if (!isFatal && !isWarning) continue;
 
 			// Besides the .level property, the other properties are just here
 			// for display to the user.
-			return [
-				{
-					package: item.package,
-					version: item.version,
-					url: item.url,
-					description: item.description,
-					level: isFatal ? 'fatal' : 'warn',
-				},
-			];
-		});
+			results.push({
+				level: isFatal ? 'fatal' : 'warn',
+				package: item.package,
+				url: item.url,
+				description: item.description,
+			});
+		}
+
+		// Return an empty array if there are no advisories!
+		return results;
 	},
 };
 

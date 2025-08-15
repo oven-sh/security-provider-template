@@ -29,6 +29,10 @@ When packages are installed via Bun, your security provider should:
 
 All advisories are always displayed to the user regardless of level.
 
+### Error Handling
+
+If your `scan` function throws an error, it will be gracefully handled by Bun, but the installation process **will be cancelled** as a defensive precaution.
+
 ### Validation
 
 The template implements simple validation for the sake of keeping the template
