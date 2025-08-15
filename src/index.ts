@@ -2,6 +2,7 @@ export const provider: Bun.Security.Provider = {
 	version: '1',
 	async scan({ packages }) {
 		const response = await fetch('https://api.example.com/scan', {
+			method: 'POST',
 			body: JSON.stringify({
 				packages: packages.map(p => ({
 					name: p.name,
