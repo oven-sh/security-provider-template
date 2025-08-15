@@ -21,7 +21,7 @@ When packages are installed via Bun, your security provider should:
 ### Advisory Levels
 
 - **Fatal** (`level: 'fatal'`): Installation stops immediately
-  - Examples: backdoors, botnets, critical vulnerabilities
+  - Examples: malware, token stealers, backdoors, critical vulnerabilities
 - **Warning** (`level: 'warn'`): User prompted for confirmation
   - In TTY: User can choose to continue or cancel
   - Non-TTY: Installation automatically cancelled
