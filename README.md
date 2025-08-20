@@ -68,9 +68,8 @@ Bun provides several built-in APIs that are particularly useful for security pro
   }
   ```
 
-- **`Bun.hash()`**: Fast hashing for package integrity checks
-- **`Bun.file()`**: Efficient file I/O for reading local threat databases
-- **`Bun.spawn()`**: Run external security scanners if needed
+- [**`Bun.hash`**](https://bun.com/docs/api/hashing#bun-hash): Fast hashing for package integrity checks
+- [**`Bun.file`**](https://bun.com/docs/api/file-io): Efficient file I/O, could be used for reading local threat databases
 
 ## Testing
 
