@@ -1,21 +1,39 @@
+// This is just an example interface of mock data. You can change this to the
+// type of your actual threat feed (or ideally use a good schema validation
+// library to infer your types from).
+interface ThreatFeedItem {
+	package: string;
+	range: string;
+	url: string | null;
+	description: string | null;
+	categories: Array<'protestware' | 'adware' | 'backdoor' | 'malware' | 'botnet'>;
+}
+
+async function fetchThreatFeed(packages: Bun.Security.Package[]): Promise<ThreatFeedItem[]> {
+	// In a real provider you would probably replace this mock data with a
+	// fetch() to your threat feed, validating it with Zod or a similar library.
+
+	const myPretendThreatFeed: ThreatFeedItem[] = [
+		{
+			package: 'event-stream',
+			range: '>=3.3.6', // You can use Bun.semver.satisfies to match this
+			url: 'https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident',
+			description: 'event-stream is a malicious package',
+			categories: ['malware'],
+		},
+	];
+
+	return myPretendThreatFeed.filter(item => {
+		return packages.some(
+			p => p.name === item.package && Bun.semver.satisfies(p.version, item.range)
+		);
+	});
+}
+
 export const provider: Bun.Security.Provider = {
 	version: '1',
 	async scan({ packages }) {
-		const response = await fetch('https://api.example.com/scan', {
-			method: 'POST',
-			body: JSON.stringify({
-				packages: packages.map(p => ({
-					name: p.name,
-					version: p.version,
-				})),
-			}),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		const json = await response.json();
-		validateThreatFeed(json);
+		const feed = await fetchThreatFeed(packages);
 
 		// Iterate over reported threats and return an array of advisories. This
 		// could be longer, shorter or equal length of the input packages array.
@@ -23,13 +41,16 @@ export const provider: Bun.Security.Provider = {
 
 		const results: Bun.Security.Advisory[] = [];
 
-		for (const item of json) {
+		for (const item of feed) {
 			// Advisory levels control installation behavior:
 			// - All advisories are always shown to the user regardless of level
 			// - Fatal: Installation stops immediately (e.g., backdoors, botnets)
 			// - Warning: User prompted in TTY, auto-cancelled in non-TTY (e.g., protestware, adware)
 
-			const isFatal = item.categories.includes('backdoor') || item.categories.includes('botnet');
+			const isFatal =
+				item.categories.includes('malware') ||
+				item.categories.includes('backdoor') ||
+				item.categories.includes('botnet');
 
 			const isWarning =
 				item.categories.includes('protestware') || item.categories.includes('adware');
@@ -50,43 +71,3 @@ export const provider: Bun.Security.Provider = {
 		return results;
 	},
 };
-
-type ThreatFeedItemCategory =
-	| 'protestware'
-	| 'adware'
-	| 'backdoor'
-	| 'botnet'; /* ...maybe you have some others */
-
-interface ThreatFeedItem {
-	package: string;
-	version: string;
-	url: string | null;
-	description: string | null;
-	categories: Array<ThreatFeedItemCategory>;
-}
-
-// You should really use a schema validation library like Zod here to validate
-// the feed. This code needs to be defensive rather than fast, so it's sensible
-// to check just to be sure.
-function validateThreatFeed(json: unknown): asserts json is ThreatFeedItem[] {
-	if (!Array.isArray(json)) {
-		throw new Error('Invalid threat feed');
-	}
-
-	for (const item of json) {
-		if (
-			typeof item !== 'object' ||
-			item === null ||
-			!('package' in item) ||
-			!('version' in item) ||
-			!('url' in item) ||
-			!('description' in item) ||
-			typeof item.package !== 'string' ||
-			typeof item.version !== 'string' ||
-			(typeof item.url !== 'string' && item.url !== null) ||
-			(typeof item.description !== 'string' && item.description !== null)
-		) {
-			throw new Error('Invalid threat feed item');
-		}
-	}
-}

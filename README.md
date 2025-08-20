@@ -38,8 +38,11 @@ If your `scan` function throws an error, it will be gracefully handled by Bun, b
 
 ### Validation
 
-The template implements simple validation for the sake of keeping the template
-simple. Consider using a schema validation library like Zod for production:
+If you fetch a threat feed over the network, perhaps from your own API, consider
+using a schema validation library like Zod for production. This code needs to be
+defensive in all cases, so we should fail if we receive an invalid thread feed,
+rather than continuining and potentially returning an empty array of advisories.
+It's better to fail fast here.
 
 ```typescript
 import { z } from 'zod';
@@ -52,6 +55,22 @@ const ThreatFeedItemSchema = z.object({
 	categories: z.array(z.enum(['backdoor', 'botnet' /* ... */])),
 });
 ```
+
+### Useful Bun APIs
+
+Bun provides several built-in APIs that are particularly useful for security providers:
+
+- **`Bun.semver.satisfies()`**: Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
+
+  ```typescript
+  if (Bun.semver.satisfies(version, '>=1.0.0 <1.2.5')) {
+  	// Version is vulnerable
+  }
+  ```
+
+- **`Bun.hash()`**: Fast hashing for package integrity checks
+- **`Bun.file()`**: Efficient file I/O for reading local threat databases
+- **`Bun.spawn()`**: Run external security scanners if needed
 
 ## Testing
 
