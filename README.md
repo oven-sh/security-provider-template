@@ -5,21 +5,19 @@
 > [!WARNING]
 > This feature is currently unfinished but will be shipping soon. Track progress at https://github.com/oven-sh/bun/pull/21183
 
-A template for creating custom security providers for Bun's package installation
-process. Security providers allow you to scan packages against your own threat
-intelligence feeds and control the installation flow based on security
-advisories.
+A template for creating a security provider for Bun's package installation
+process. Security providers scan packages against your threat intelligence feeds  
+and control whether installations proceed based on detected threats.
 
 ## How It Works
 
-When packages are installed via Bun, your security provider should:
+When packages are installed via Bun, your security provider:
 
-1. **Receive** package information (name, version)
-2. **Query** your threat intelligence API
-3. **Validate** the response data
-4. **Categorize** threats based on severity
-5. **Return** an array of advisories that control installation behavior. Return
-   an empty array if there are no advisories.
+1. **Receives** package information (name, version)
+2. **Queries** your threat intelligence API
+3. **Validates** the response data
+4. **Categorizes** threats by severity
+5. **Returns** advisories to control installation (empty array if safe)
 
 ### Advisory Levels
 
@@ -38,11 +36,9 @@ If your `scan` function throws an error, it will be gracefully handled by Bun, b
 
 ### Validation
 
-If you fetch a threat feed over the network, perhaps from your own API, consider
-using a schema validation library like Zod for production. This code needs to be
-defensive in all cases, so we should fail if we receive an invalid thread feed,
-rather than continuining and potentially returning an empty array of advisories.
-It's better to fail fast here.
+When fetching threat feeds over the network, use schema validation  
+(e.g., Zod) to ensure data integrity. Invalid responses should fail immediately
+rather than silently returning empty advisories.
 
 ```typescript
 import { z } from 'zod';
@@ -73,8 +69,8 @@ Bun provides several built-in APIs that are particularly useful for security pro
 
 ## Testing
 
-This template comes with a test file already setup. It tests for a known
-malicious package version. You can remove or edit this test file as you see fit.
+This template includes tests for a known malicious package version.
+Customize the test file as needed.
 
 ```bash
 bun test
@@ -82,15 +78,13 @@ bun test
 
 ## Publishing Your Provider
 
-Publishing your security provider is straightforward - simply publish it to npm:
+Publish your security provider to npm:
 
 ```bash
 bun publish
 ```
 
-That's it! Once published, users can configure Bun to use your security provider
-by installing it in the project and adding it to their `bunfig.toml`
-configuration file.
+That's it! Users can now install your provider and add it to their `bunfig.toml` configuration.
 
 ## Contributing
 
