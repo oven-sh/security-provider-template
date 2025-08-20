@@ -78,6 +78,6 @@ security requirements.
 
 ## Support
 
-For docs and questions, see the [Bun documentation](https://bun.com/docs) or [Join our Discord](https://bun.com/discord).
+For docs and questions, see the [Bun documentation](/docs/install/security) or [Join our Discord](https://bun.com/discord).
 
 For template issues, please open an issue in this repository.
