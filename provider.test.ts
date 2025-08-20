@@ -22,8 +22,10 @@ test('Provider should warn about known malicious packages', async () => {
 	expect(advisories.length).toBeGreaterThan(0);
 	const advisory = advisories[0]!;
 
-	expect(advisory.level).toBe('warn');
-	expect(advisory.package).toBe('event-stream');
-	expect(advisory).toHaveProperty('url');
-	expect(advisory).toHaveProperty('description');
+	expect(advisory).toMatchObject({
+		level: 'warn',
+		package: 'event-stream',
+		url: expect.any(String),
+		description: expect.any(String),
+	});
 });
