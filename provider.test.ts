@@ -35,3 +35,81 @@ test('There should be no advisories if no packages are being installed', async (
 	const advisories = await provider.scan({ packages: [] });
 	expect(advisories.length).toBe(0);
 });
+
+test('Safe packages should return no advisories', async () => {
+	const advisories = await provider.scan({
+		packages: [
+			{
+				name: 'lodash',
+				version: '4.17.21',
+				requestedRange: '^4.17.0',
+				tarball: 'https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz',
+			},
+		],
+	});
+	expect(advisories.length).toBe(0);
+});
+
+test('Should handle multiple packages with mixed security status', async () => {
+	const advisories = await provider.scan({
+		packages: [
+			{
+				name: 'event-stream',
+				version: '3.3.6', // malicious
+				requestedRange: '^3.3.0',
+				tarball: 'https://registry.npmjs.org/event-stream/-/event-stream-3.3.6.tgz',
+			},
+			{
+				name: 'lodash',
+				version: '4.17.21', // safe
+				requestedRange: '^4.17.0',
+				tarball: 'https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz',
+			},
+		],
+	});
+
+	expect(advisories.length).toBe(1);
+	expect(advisories[0]?.package).toBe('event-stream');
+});
+
+test('Should differentiate between versions of the same package', async () => {
+	const maliciousVersion = await provider.scan({
+		packages: [
+			{
+				name: 'event-stream',
+				version: '3.3.6', // malicious version
+				requestedRange: '3.3.6',
+				tarball: 'https://registry.npmjs.org/event-stream/-/event-stream-3.3.6.tgz',
+			},
+		],
+	});
+
+	const safeVersion = await provider.scan({
+		packages: [
+			{
+				name: 'event-stream',
+				version: '4.0.0', // safe version
+				requestedRange: '4.0.0',
+				tarball: 'https://registry.npmjs.org/event-stream/-/event-stream-4.0.0.tgz',
+			},
+		],
+	});
+
+	expect(maliciousVersion.length).toBeGreaterThan(0);
+	expect(safeVersion.length).toBe(0);
+});
+
+test('Should handle scoped packages correctly', async () => {
+	const advisories = await provider.scan({
+		packages: [
+			{
+				name: '@types/node',
+				version: '20.0.0',
+				requestedRange: '^20.0.0',
+				tarball: 'https://registry.npmjs.org/@types/node/-/node-20.0.0.tgz',
+			},
+		],
+	});
+
+	expect(advisories.length).toBe(0);
+});

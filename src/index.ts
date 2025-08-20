@@ -16,11 +16,12 @@ async function fetchThreatFeed(packages: Bun.Security.Package[]): Promise<Threat
 	const myPretendThreatFeed: ThreatFeedItem[] = [
 		{
 			package: 'event-stream',
-			range: '>=3.3.6', // You can use Bun.semver.satisfies to match this
+			range: '>=3.3.6 <4.0.0', // Matches 3.3.6 and above but less than 4.0.0
 			url: 'https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident',
 			description: 'event-stream is a malicious package',
 			categories: ['malware'],
 		},
+		// ...
 	];
 
 	return myPretendThreatFeed.filter(item => {
@@ -31,7 +32,7 @@ async function fetchThreatFeed(packages: Bun.Security.Package[]): Promise<Threat
 }
 
 export const provider: Bun.Security.Provider = {
-	version: '1',
+	version: '1', // This is the version of Bun security provider implementation. You should keep this set as '1'
 	async scan({ packages }) {
 		const feed = await fetchThreatFeed(packages);
 
