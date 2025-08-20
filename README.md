@@ -9,6 +9,8 @@ A template for creating a security provider for Bun's package installation
 process. Security providers scan packages against your threat intelligence feeds  
 and control whether installations proceed based on detected threats.
 
+📚 [**Full documentation**](https://bun.com/docs/install/security)
+
 ## How It Works
 
 When packages are installed via Bun, your security provider:
@@ -56,6 +58,7 @@ const ThreatFeedItemSchema = z.object({
 
 Bun provides several built-in APIs that are particularly useful for security providers:
 
+- [**Security Provider API Reference**](https://bun.com/reference/bun/Security): Complete API documentation for security providers
 - [**`Bun.semver.satisfies()`**](https://bun.com/docs/api/semver): Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
 
   ```typescript
@@ -84,7 +87,17 @@ Publish your security provider to npm:
 bun publish
 ```
 
-That's it! Users can now install your provider and add it to their `bunfig.toml` configuration.
+Users can now install your provider and add it to their `bunfig.toml` configuration.
+
+To test locally before publishing, use [`bun link`](https://bun.sh/docs/cli/link):
+
+```bash
+# In your provider directory
+bun link
+
+# In your test project
+bun link @acme/bun # this is the name in package.json of your provider
+```
 
 ## Contributing
 
