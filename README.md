@@ -60,7 +60,7 @@ const ThreatFeedItemSchema = z.object({
 
 Bun provides several built-in APIs that are particularly useful for security providers:
 
-- **`Bun.semver.satisfies()`**: Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
+- [**`Bun.semver.satisfies()`**](https://bun.com/docs/api/semver): Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
 
   ```typescript
   if (Bun.semver.satisfies(version, '>=1.0.0 <1.2.5')) {
