@@ -2,8 +2,8 @@
 
 # Bun Security Provider Template
 
-> ⚠️ **Warning**: This feature is currently unfinished but will be shipping
-> soon. Track progress at https://github.com/oven-sh/bun/pull/21183
+> [!WARNING]
+> This feature is currently unfinished but will be shipping soon. Track progress at https://github.com/oven-sh/bun/pull/21183
 
 A template for creating custom security providers for Bun's package installation
 process. Security providers allow you to scan packages against your own threat
