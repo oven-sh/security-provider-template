@@ -18,8 +18,8 @@ export const provider: Bun.Security.Provider = {
 		validateThreatFeed(json);
 
 		// Iterate over reported threats and return an array of advisories. This
-		// could longer, shorter or equal length to the input packages. Whatever
-		// you return will be shown to the user.#
+		// could be longer, shorter or equal length of the input packages array.
+		// Whatever you return will be shown to the user.
 
 		const results: Bun.Security.Advisory[] = [];
 

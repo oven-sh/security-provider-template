@@ -15,7 +15,7 @@ advisories.
 When packages are installed via Bun, your security provider should:
 
 1. **Receive** package information (name, version)
-2. **Querie** your threat intelligence API
+2. **Query** your threat intelligence API
 3. **Validate** the response data
 4. **Categorize** threats based on severity
 5. **Return** an array of advisories that control installation behavior. Return
