@@ -4,6 +4,10 @@
 	"version": "1.0.0",
 	"author": "Acme",
 	"license": "MIT",
+	"exports": {
+		"./package.json": "./package.json",
+		".": "./src/index.ts"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/acme/bun"
