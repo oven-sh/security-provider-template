@@ -1,5 +1,5 @@
 import {expect, test} from 'bun:test';
-import {provider} from './src/index.ts';
+import {scanner} from './src/index.ts';
 
 /////////////////////////////////////////////////////////////////////////////////////
 //  This test file is mostly just here to get you up and running quickly. It's
@@ -7,8 +7,8 @@ import {provider} from './src/index.ts';
 //  own code.
 /////////////////////////////////////////////////////////////////////////////////////
 
-test('Provider should warn about known malicious packages', async () => {
-	const advisories = await provider.scan({
+test('Scanner should warn about known malicious packages', async () => {
+	const advisories = await scanner.scan({
 		packages: [
 			{
 				name: 'event-stream',
@@ -32,12 +32,12 @@ test('Provider should warn about known malicious packages', async () => {
 });
 
 test('There should be no advisories if no packages are being installed', async () => {
-	const advisories = await provider.scan({packages: []});
+	const advisories = await scanner.scan({packages: []});
 	expect(advisories.length).toBe(0);
 });
 
 test('Safe packages should return no advisories', async () => {
-	const advisories = await provider.scan({
+	const advisories = await scanner.scan({
 		packages: [
 			{
 				name: 'lodash',
@@ -51,7 +51,7 @@ test('Safe packages should return no advisories', async () => {
 });
 
 test('Should handle multiple packages with mixed security status', async () => {
-	const advisories = await provider.scan({
+	const advisories = await scanner.scan({
 		packages: [
 			{
 				name: 'event-stream',
@@ -73,7 +73,7 @@ test('Should handle multiple packages with mixed security status', async () => {
 });
 
 test('Should differentiate between versions of the same package', async () => {
-	const maliciousVersion = await provider.scan({
+	const maliciousVersion = await scanner.scan({
 		packages: [
 			{
 				name: 'event-stream',
@@ -84,7 +84,7 @@ test('Should differentiate between versions of the same package', async () => {
 		],
 	});
 
-	const safeVersion = await provider.scan({
+	const safeVersion = await scanner.scan({
 		packages: [
 			{
 				name: 'event-stream',
@@ -100,7 +100,7 @@ test('Should differentiate between versions of the same package', async () => {
 });
 
 test('Should handle scoped packages correctly', async () => {
-	const advisories = await provider.scan({
+	const advisories = await scanner.scan({
 		packages: [
 			{
 				name: '@types/node',
