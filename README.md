@@ -1,19 +1,19 @@
 <img src="https://bun.com/logo.png" height="36" />
 
-# Bun Security Provider Template
+# Bun Security Scanner Template
 
 > [!WARNING]
 > This feature is currently unfinished but will be shipping soon. Track progress at https://github.com/oven-sh/bun/pull/21183
 
-A template for creating a security provider for Bun's package installation
-process. Security providers scan packages against your threat intelligence feeds  
+A template for creating a security scanner for Bun's package installation
+process. Security scanners scan packages against your threat intelligence feeds
 and control whether installations proceed based on detected threats.
 
 📚 [**Full documentation**](https://bun.com/docs/install/security)
 
 ## How It Works
 
-When packages are installed via Bun, your security provider:
+When packages are installed via Bun, your security scanner:
 
 1. **Receives** package information (name, version)
 2. **Queries** your threat intelligence API
@@ -56,9 +56,9 @@ const ThreatFeedItemSchema = z.object({
 
 ### Useful Bun APIs
 
-Bun provides several built-in APIs that are particularly useful for security providers:
+Bun provides several built-in APIs that are particularly useful for security scanner:
 
-- [**Security Provider API Reference**](https://bun.com/reference/bun/Security): Complete API documentation for security providers
+- [**Security scanner API Reference**](https://bun.com/docs/install/security): Complete API documentation for security scanners
 - [**`Bun.semver.satisfies()`**](https://bun.com/docs/api/semver): Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
 
   ```typescript
@@ -81,7 +81,7 @@ bun test
 
 ## Publishing Your Provider
 
-Publish your security provider to npm:
+Publish your security scanner to npm:
 
 ```bash
 bun publish

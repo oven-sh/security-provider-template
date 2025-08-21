@@ -31,8 +31,8 @@ async function fetchThreatFeed(packages: Bun.Security.Package[]): Promise<Threat
 	});
 }
 
-export const provider: Bun.Security.Provider = {
-	version: '1', // This is the version of Bun security provider implementation. You should keep this set as '1'
+export const scanner: Bun.Security.Scanner = {
+	version: '1', // This is the version of Bun security scanner implementation. You should keep this set as '1'
 	async scan({packages}) {
 		const feed = await fetchThreatFeed(packages);
 

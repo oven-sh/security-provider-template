@@ -1,6 +1,6 @@
 {
 	"name": "@acme/bun",
-	"description": "Bun security provider for Acme",
+	"description": "Bun security scanner for acmecorp",
 	"version": "1.0.0",
 	"author": "Acme",
 	"license": "MIT",
