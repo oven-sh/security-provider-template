@@ -9,7 +9,7 @@ A template for creating a security scanner for Bun's package installation
 process. Security scanners scan packages against your threat intelligence feeds
 and control whether installations proceed based on detected threats.
 
-📚 [**Full documentation**](https://bun.com/docs/install/security)
+📚 [**Full documentation**](https://bun.com/docs/install/security-scanner-api)
 
 ## How It Works
 
@@ -58,7 +58,7 @@ const ThreatFeedItemSchema = z.object({
 
 Bun provides several built-in APIs that are particularly useful for security scanner:
 
-- [**Security scanner API Reference**](https://bun.com/docs/install/security): Complete API documentation for security scanners
+- [**Security scanner API Reference**](https://bun.com/docs/install/security-scanner-api): Complete API documentation for security scanners
 - [**`Bun.semver.satisfies()`**](https://bun.com/docs/api/semver): Essential for checking if package versions match vulnerability ranges. No external dependencies needed.
 
   ```typescript
@@ -106,6 +106,6 @@ security requirements.
 
 ## Support
 
-For docs and questions, see the [Bun documentation](https://bun.com/docs/install/security) or [Join our Discord](https://bun.com/discord).
+For docs and questions, see the [Bun documentation](https://bun.com/docs/install/security-scanner-api) or [Join our Discord](https://bun.com/discord).
 
 For template issues, please open an issue in this repository.
