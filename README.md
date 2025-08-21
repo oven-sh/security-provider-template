@@ -2,9 +2,6 @@
 
 # Bun Security Scanner Template
 
-> [!WARNING]
-> This feature is currently unfinished but will be shipping soon. Track progress at https://github.com/oven-sh/bun/pull/21183
-
 A template for creating a security scanner for Bun's package installation
 process. Security scanners scan packages against your threat intelligence feeds
 and control whether installations proceed based on detected threats.
