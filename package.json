@@ -15,6 +15,7 @@
 	],
 	"devDependencies": {
 		"@types/bun": "latest",
+		"prettier": "^3.6.2",
 		"typescript": "^5.9.2"
 	}
 }

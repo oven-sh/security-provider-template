@@ -1,5 +1,5 @@
-import { expect, test } from 'bun:test';
-import { provider } from './src/index.ts';
+import {expect, test} from 'bun:test';
+import {provider} from './src/index.ts';
 
 /////////////////////////////////////////////////////////////////////////////////////
 //  This test file is mostly just here to get you up and running quickly. It's
@@ -32,7 +32,7 @@ test('Provider should warn about known malicious packages', async () => {
 });
 
 test('There should be no advisories if no packages are being installed', async () => {
-	const advisories = await provider.scan({ packages: [] });
+	const advisories = await provider.scan({packages: []});
 	expect(advisories.length).toBe(0);
 });
 

@@ -98,7 +98,7 @@ declare module 'bun' {
 			 *
 			 * @returns A list of advisories.
 			 */
-			scan: (info: { packages: Package[] }) => Promise<Advisory[]>;
+			scan: (info: {packages: Package[]}) => Promise<Advisory[]>;
 		}
 	}
 }

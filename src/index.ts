@@ -26,14 +26,14 @@ async function fetchThreatFeed(packages: Bun.Security.Package[]): Promise<Threat
 
 	return myPretendThreatFeed.filter(item => {
 		return packages.some(
-			p => p.name === item.package && Bun.semver.satisfies(p.version, item.range)
+			p => p.name === item.package && Bun.semver.satisfies(p.version, item.range),
 		);
 	});
 }
 
 export const provider: Bun.Security.Provider = {
 	version: '1', // This is the version of Bun security provider implementation. You should keep this set as '1'
-	async scan({ packages }) {
+	async scan({packages}) {
 		const feed = await fetchThreatFeed(packages);
 
 		// Iterate over reported threats and return an array of advisories. This

@@ -43,7 +43,7 @@ When fetching threat feeds over the network, use schema validation
 rather than silently returning empty advisories.
 
 ```typescript
-import { z } from 'zod';
+import {z} from 'zod';
 
 const ThreatFeedItemSchema = z.object({
 	package: z.string(),
